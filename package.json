@@ -11,6 +11,8 @@
         "start": "webpack-dev-server --open"
     },
     "dependencies": {
+        "aws-amplify": "^3.3.26",
+        "aws-amplify-react": "^4.2.30",
         "history": "^4.10.1",
         "react": "^16.13.0",
         "react-dom": "^16.13.0",
