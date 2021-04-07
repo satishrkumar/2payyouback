@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../_actions';
 import '../css/homepage.css'
@@ -79,7 +80,7 @@ function LoginPage() {
                         {loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
                         Login
                     </button><br /><br />
-                    Don't have an account yet? <Link to="/register" className="btn btn-link">Signup</Link>
+                    Don't have an account yet? <NavLink to="/register" className="btn btn-link">Signup</NavLink>
                 </div>
             </form>
             </div>
