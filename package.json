@@ -13,9 +13,12 @@
     "dependencies": {
         "aws-amplify": "^3.3.26",
         "aws-amplify-react": "^4.2.30",
+        "bootstrap": "^4.6.0",
         "history": "^4.10.1",
         "react": "^16.13.0",
+        "react-bootstrap": "^1.5.2",
         "react-dom": "^16.13.0",
+        "react-modal": "^3.12.1",
         "react-redux": "^7.2.0",
         "react-router-dom": "^5.1.2",
         "react-step-progress": "^1.0.3",
