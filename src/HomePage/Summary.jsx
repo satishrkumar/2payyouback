@@ -10,6 +10,8 @@ import weekDaysImg from "../images/week days.svg";
 import businessCardImg from "../images/business card.svg";
 import accountVerificationImg from "../images/account verification.svg";
 import recentActivityImg from "../images/recent activity.svg";
+import appStoreImg from "../images/appstore.svg";
+
 export default function Summary() {
   const users = useSelector((state) => state.users);
   const user = useSelector((state) => state.authentication.user);
@@ -30,11 +32,7 @@ export default function Summary() {
           <div className="textAlignCenter">
             <img className="mobileAppImg" src={mobileImg} alt="image" />
             <br />
-            <img
-              className="AppleAppImg"
-              src="src/images/appstore.svg"
-              alt="image"
-            />
+            <img className="AppleAppImg" src={appStoreImg} alt="image" />
             <img
               className="googleAppImg"
               src={googlePlaystoreImg}
