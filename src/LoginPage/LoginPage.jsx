@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../_actions";
 import "../css/homepage.css";
+import loginBg from "../images/loginBg.png";
 
 function LoginPage() {
   const [inputs, setInputs] = useState({
@@ -48,11 +49,7 @@ function LoginPage() {
     <div className="container loginPage" style={containerBg}>
       <div className="row">
         <div className="col-md-7">
-          <img
-            className="leftpannelImg"
-            src="../src/images/loginBg.png"
-            alt="image"
-          />
+          <img className="leftpannelImg" src={loginBg} alt="image" />
         </div>
         <div className="col-md-5 textAlignCenter">
           <h1 className="mb-4 bold">2PayUBack</h1>
