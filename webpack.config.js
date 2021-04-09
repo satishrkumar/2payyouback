@@ -1,3 +1,4 @@
+const path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -13,12 +14,13 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: [ 'style-loader', 'css-loader' ]
+                use: ['style-loader', 'css-loader']
             }
         ]
     },
     plugins: [new HtmlWebpackPlugin({
-        template: './src/index.html'
+        template: path.resolve(__dirname, 'src', 'index.html')
+        //template: './src/index.html'
     })],
     devServer: {
         historyApiFallback: true
