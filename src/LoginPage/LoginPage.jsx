@@ -5,6 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../_actions";
 import "../css/homepage.css";
 import loginBg from "../images/loginBg.png";
+import paypalIcon from "../images/paypal-icon.svg";
+import fbIcon from "../images/fb-icon.svg";
+import appleIcon from "../images/apple-icon.svg";
+import googleIcon from "../images/google-icon.svg";
 
 function LoginPage() {
   const [inputs, setInputs] = useState({
@@ -55,26 +59,10 @@ function LoginPage() {
           <h1 className="mb-4 bold">2PayUBack</h1>
           <h2 className="mb-4 bold">Welcome Back</h2>
           <div className="textAlignCenter">
-            <img
-              className="iconClass"
-              src="src/images/paypal-icon.svg"
-              alt="image"
-            />
-            <img
-              className="iconClass"
-              src="src/images/google-icon.svg"
-              alt="image"
-            />
-            <img
-              className="iconClass"
-              src="src/images/fb-icon.svg"
-              alt="image"
-            />
-            <img
-              className="iconClass"
-              src="src/images/apple-icon.svg"
-              alt="image"
-            />
+            <img className="iconClass" src={paypalIcon} alt="image" />
+            <img className="iconClass" src={googleIcon} alt="image" />
+            <img className="iconClass" src={fbIcon} alt="image" />
+            <img className="iconClass" src={appleIcon} alt="image" />
           </div>
           <h6 className="mt-5 mb-4">---- OR LOGIN WITH / MOBILE ----</h6>
           <form name="form" onSubmit={handleSubmit}>
