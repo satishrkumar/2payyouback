@@ -17,17 +17,7 @@ module.exports = {
                 use: ['style-loader', 'css-loader']
             },
             {
-                test: /\.(jpg|jpeg|gif|mp3|ttf|woff2|woff|eot)$/gi,
-                use: {
-                    loader: "file-loader",
-                    options: {
-                        name: "[name].[hash].[ext]",
-                        outputPath: "assets/imgs"
-                    }
-                }
-            },
-            {
-                test: /\.(svg|png)$/i,
+                test: /\.(jpg|jpeg|gif|svg|png)$/i,
                 use: [
                     {
                         loader: 'url-loader',
