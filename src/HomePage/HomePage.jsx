@@ -22,7 +22,8 @@ function HomePage() {
     <div className="container" style={containerBg}>
       <div className="row">
         <LeftNav />
-        <div className="col-md-10">
+                <div className="col-md-9">
+
           <Header />
 
           <div className="row" className="spacingMargin">

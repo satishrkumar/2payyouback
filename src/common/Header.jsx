@@ -42,12 +42,15 @@ export default function Header() {
         <div className="col-md-5 textAlign">
           <span className="headerIcon">
             <img src={approveLoanImg} alt="image" />
+            <p>Approve a Loan</p>
           </span>
           <span className="headerIcon">
             <img src={requestLoanImg} alt="image" />
+            <p>Request a Loan</p>
           </span>
           <span className="headerIcon">
             <img src={moreImg} alt="image" />
+            <p>More</p>
           </span>
           <span className="headerIcon">
             <img src={notificationBellImg} alt="image" />

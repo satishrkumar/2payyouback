@@ -6,6 +6,8 @@ import { alertActions } from '../_actions';
 import { PrivateRoute } from '../_components';
 import { HomePage } from '../HomePage';
 import { RequestLoanPage } from '../RequestLoanPage';
+import { ApproveLoan } from '../ApproveLoan';
+import { Renegotiate } from '../ApproveLoan/Renegotiate';
 import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
 
@@ -45,6 +47,8 @@ function App() {
                             <Route path="/login" component={LoginPage} />
                             <Route path="/register" component={RegisterPage} />
                             <Route path="/requestloan" component={RequestLoanPage} /> 
+                            <Route path="/approveloan" component={ApproveLoan} />
+                            <Route path="/renegotiate" component={Renegotiate} />
                             <Route path="/HomePage" component={HomePage} />
 
                             <Redirect from="*" to="/" />

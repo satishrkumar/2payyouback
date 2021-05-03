@@ -3,18 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../_actions";
 import LeftNav from "../common/LeftNav";
 import Header from "../common/Header";
-import LoanDetails from "./LoanDetails";
-import RepaymentDetails from "./RepaymentDetails";
-import PaypalAccount from "./PaypalAccount";
+import LoanRequestDetails from "./LoanRequestDetails";
+import ViewDetails from "./ViewDetails";
+import Summary from "./Summary";
 import StepProgressBar from "react-step-progress";
 import "../css/homepage.css";
-import "react-step-progress/dist/index.css";
 import { Modal } from "react-bootstrap";
 import { Button } from "react-bootstrap";
+import "react-step-progress/dist/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import payPalImg from "../images/paypal_icon.svg";
 
-function RequestLoanPage() {
+function ApproveLoan() {
   const users = useSelector((state) => state.users);
   const user = useSelector((state) => state.authentication.user);
   const dispatch = useDispatch();
@@ -24,44 +24,29 @@ function RequestLoanPage() {
     maxWidth: "98%",
     borderRadius: "50px",
     padding: "0",
-    marginBottom:"20px"
-
+    marginBottom: "20px",
   };
   useEffect(() => {
     debugger;
     dispatch(userActions.getById(user.id));
   }, []);
-  const step1Content = <LoanDetails />;
-  const step3Content = <RepaymentDetails />;
-  const step4Content = <PaypalAccount />;
+  const step1Content = <LoanRequestDetails />;
+  const step3Content = <ViewDetails />;
+  const step4Content = <Summary />;
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-
-  var modelContent = "";
   function step3Validator() {
     // alert("one");
-     modelContent = "Do you have a PayPal account?";
     handleShow();
     return true;
   }
   const onSubmit = () => {
     alert("submit data");
   };
-
-
-
-
-  function One() {
-    // alert("one");
-   modelContent = "abc";
-    handleShow();
-    return true;
-  }
-
 
   return (
     <div className="container requestBG" style={containerBg}>
@@ -71,7 +56,7 @@ function RequestLoanPage() {
           <Header />
           <div className="row" className="spacingMargin">
             <div className="row">
-              <h5 className="bold">Request a Loan</h5>
+              <h5 className="bold">Approve a Loan</h5>
             </div>
             <div className="row">
               <StepProgressBar
@@ -83,8 +68,8 @@ function RequestLoanPage() {
                 nextBtnName="Next"
                 steps={[
                   {
-                    label: "Loan Details",
-                    name: "Loan Details",
+                    label: "Loan Request Details",
+                    name: "Loan Request Details",
                     content: step1Content,
                   },
                   // {
@@ -94,14 +79,14 @@ function RequestLoanPage() {
                   //   validator: step2Validator
                   // },
                   {
-                    label: "Loan Repayment Details",
-                    name: "Loan Repayment Details",
+                    label: "View Details",
+                    name: "View Details",
                     content: step3Content,
                     validator: step3Validator,
                   },
                   {
-                    label: "PayPal Account",
-                    name: "PayPal Account",
+                    label: "Summary",
+                    name: "Summary",
                     content: step4Content,
                   },
                 ]}
@@ -111,26 +96,26 @@ function RequestLoanPage() {
         </div>
       </div>
 
-      <Modal show={show} onHide={handleClose} className="paymentModelWindow">
+      {/* <Modal show={show} onHide={handleClose} className="paymentModelWindow">
         <Modal.Header>
           <Modal.Title>
             <img src={payPalImg} alt="image" />
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="textAlignCenter">
-          {modelContent}
+          Do you have a PayPal account?
         </Modal.Body>
         <Modal.Footer className="textAlignCenter">
           <Button variant="primary" onClick={handleClose}>
             Link PayPal
           </Button>
-          <Button variant="secondary" onClick={One}>
+          <Button variant="secondary" onClick={handleClose}>
             Pay Manually
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
     </div>
   );
 }
 
-export { RequestLoanPage };
+export { ApproveLoan };

@@ -28,14 +28,14 @@ export default function RepaymentDetails() {
     <div className="step3 loanDetails">
       <h2 className="bold">Loan Repayment Details</h2>
       <div className="row">
-        <div className="col-md-5">
+        <div className="col-md-4">
           <img
             className="leftpannelImg"
             src={loanRepaymentDetailImg}
             alt="image"
           />
         </div>
-        <div className="col-md-5 marginLeft">
+        <div className="col-md-6 marginLeft">
           <div className="form-group">
             <p className="textAlignLeft bold">Loan Repayment Frequency</p>
             <div className="textAlignLeft" onChange={handleChange}>

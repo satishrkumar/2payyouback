@@ -34,7 +34,9 @@ export default function LeftNav() {
         </p>
         <p className="bold">
           <img className="iconClass" src={moneyImg} alt="image" />
-          Agree a Loan
+          <NavLink to="/approveloan" activeStyle={{ color: "#0070ba" }} exact>
+          Approve a Loan
+          </NavLink>
         </p>
         <p className="bold">
           <img className="iconClass" src={creditCardImg} alt="image" />
