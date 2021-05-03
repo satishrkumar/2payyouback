@@ -39,7 +39,7 @@ module.exports = {
     externals: {
         // global app config object
         config: JSON.stringify({
-            apiUrl: 'http://sandbox.eba-nbzsyb8d.eu-west-2.elasticbeanstalk.com/request-manager'
+            apiUrl: 'https://www.ssaaservices.co.uk/request-manager'
         })
     }
 }
