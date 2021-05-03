@@ -13,15 +13,8 @@ import helpImg from "../images/help.svg";
 
 export default function LeftNav() {
   const users = useSelector((state) => state.users);
-  const user = useSelector((state) => state.authentication.user);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(userActions.getAll());
-  }, []);
-
-  function handleDeleteUser(id) {
-    dispatch(userActions.delete(id));
-  }
 
   return (
     <div className="col-md-2 leftNav leftpannel">

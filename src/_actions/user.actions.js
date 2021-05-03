@@ -7,7 +7,7 @@ export const userActions = {
     login,
     logout,
     register,
-    getAll,
+    getById,
     delete: _delete
 };
 
@@ -17,7 +17,7 @@ function login(username, password, from) {
 
         userService.login(username, password)
             .then(
-                user => { 
+                user => {
                     dispatch(success(user));
                     history.push(from);
                 },
@@ -44,7 +44,7 @@ function register(user) {
 
         userService.register(user)
             .then(
-                user => { 
+                user => {
                     dispatch(success());
                     history.push('/login');
                     dispatch(alertActions.success('Registration successful'));
@@ -61,11 +61,11 @@ function register(user) {
     function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
 
-function getAll() {
+function getById(id) {
     return dispatch => {
         dispatch(request());
 
-        userService.getAll()
+        userService.getById(id)
             .then(
                 users => dispatch(success(users)),
                 error => dispatch(failure(error.toString()))

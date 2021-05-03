@@ -5,24 +5,47 @@ export const userService = {
     login,
     logout,
     register,
-    getAll,
     getById,
     update,
     delete: _delete
 };
 
+// function login(username, password) {
+//     const requestOptions = {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({ username, password })
+//     };
+
+//     return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
+//         .then(handleResponse)
+//         .then(user => {
+//             // store user details and jwt token in local storage to keep user logged in between page refreshes
+//             localStorage.setItem('user', JSON.stringify(user));
+
+//             return user;
+//         });
+// }
+function getHeaders() {
+    return { 'Content-Type': 'application/json', 'authorization': 'Basic ' + window.btoa('admin' + ":" + 'admin') };
+}
 function login(username, password) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getHeaders(),
         body: JSON.stringify({ username, password })
     };
 
     return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
         .then(handleResponse)
         .then(user => {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(user));
+            // login successful if there's a user in the response
+            if (user) {
+                // store user details and basic auth credentials in local storage 
+                // to keep user logged in between page refreshes
+                user.authdata = window.btoa(username + ':' + password);
+                localStorage.setItem('user', JSON.stringify(user));
+            }
 
             return user;
         });
@@ -33,32 +56,25 @@ function logout() {
     localStorage.removeItem('user');
 }
 
-function getAll() {
-    const requestOptions = {
-        method: 'GET',
-        headers: authHeader()
-    };
-
-    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
-}
 
 function getById(id) {
     const requestOptions = {
         method: 'GET',
-        headers: authHeader()
+        headers: getHeaders()
     };
 
-    return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/users/read/${id}`, requestOptions).then(handleResponse);
 }
 
 function register(user) {
+    debugger;
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getHeaders(),
         body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/users/register`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/users/registerUser`, requestOptions).then(handleResponse);
 }
 
 function update(user) {
@@ -82,6 +98,7 @@ function _delete(id) {
 }
 
 function handleResponse(response) {
+    debugger;
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
@@ -90,7 +107,11 @@ function handleResponse(response) {
                 logout();
                 location.reload(true);
             }
-
+            if (response.status === 404) {
+                // auto logout if 401 response returned from api
+                logout();
+                location.reload(true);
+            }
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }

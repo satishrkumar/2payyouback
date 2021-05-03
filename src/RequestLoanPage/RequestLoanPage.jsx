@@ -26,7 +26,8 @@ function RequestLoanPage() {
     padding: "0",
   };
   useEffect(() => {
-    dispatch(userActions.getAll());
+    debugger;
+    dispatch(userActions.getById(user.id));
   }, []);
   const step1Content = <LoanDetails />;
   const step3Content = <RepaymentDetails />;

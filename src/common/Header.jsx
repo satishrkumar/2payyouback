@@ -10,11 +10,14 @@ import notificationBellImg from "../images/notification-bell.svg";
 import settingImg from "../images/settings.svg";
 
 export default function Header() {
-  const users = useSelector((state) => state.users);
+  //const user = useSelector((state) => state.user);
   const user = useSelector((state) => state.authentication.user);
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(userActions.getAll());
+    {
+      !!user ? dispatch(userActions.getById(user.id)) : "";
+    }
   }, []);
 
   function handleDeleteUser(id) {
@@ -25,14 +28,14 @@ export default function Header() {
     <header className="headerClass">
       <div className="row">
         <div className="col-md-4">
-          <h2 className="bold">Hello, {user.firstName}!</h2>
+          <h2 className="bold">Hello, {!!user ? user.firstName : ""}!</h2>
         </div>
         <div className="col-md-3">
           <input
             type="text"
             placeholder="Search for..."
             name="search"
-            value={user.search}
+            value={!!user ? user.search : ""}
             className={"form-control"}
           />
         </div>

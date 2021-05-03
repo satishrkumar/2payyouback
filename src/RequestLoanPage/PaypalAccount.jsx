@@ -10,7 +10,8 @@ export default function LoanDetails() {
   const user = useSelector((state) => state.authentication.user);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(userActions.getAll());
+    debugger;
+    dispatch(userActions.getById(user.id));
   }, []);
 
   function handleDeleteUser(id) {
