@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../_actions";
+import { requestLoanActions } from "../_actions";
 import LeftNav from "../common/LeftNav";
 import Header from "../common/Header";
 import LoanDetails from "./LoanDetails";
@@ -17,6 +18,7 @@ import payPalImg from "../images/paypal_icon.svg";
 function RequestLoanPage() {
   const users = useSelector((state) => state.users);
   const user = useSelector((state) => state.authentication.user);
+  const loan = useSelector((state) => state.loanrequest.loan);
   const dispatch = useDispatch();
   const containerBg = {
     background: "white",
@@ -50,6 +52,7 @@ function RequestLoanPage() {
   }
   const onSubmit = () => {
     alert("submit data");
+    //dispatch(requestLoanActions.calculateMonthlyPayment(loan));
   };
 
 

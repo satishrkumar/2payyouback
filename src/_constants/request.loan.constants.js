@@ -1,0 +1,6 @@
+export const requestLoanConstants = {
+    REQLOAN_REQUEST: 'REQLOAN_REQUEST',
+    REQLOAN_SUCCESS: 'REQLOAN_SUCCESS',
+    REQLOAN_FAILURE: 'REQLOAN_FAILURE',
+  
+};

@@ -1,33 +1,42 @@
-import React, { useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { requestLoanActions } from "../_actions";
 import { userActions } from "../_actions";
 import "../css/homepage.css";
-import Modal from "react-modal";
 import loanRepaymentDetailImg from "../images/loan_repayment_details.png";
+import Async from 'react-async';
+
+import { render } from "react-dom";
 
 export default function RepaymentDetails() {
-  const users = useSelector((state) => state.users);
+  const repaymentResponse = useSelector((state) => state.loanrequest.items);
   const user = useSelector((state) => state.authentication.user);
+  const loan = localStorage.getItem('baseLoan');
+  const [repaymentDetails, setRepaymentDetails] = useState({
+    repaymentFrequency:"",
+    repaymentAmount: "",
+    totalInterest: "",
+    totalLoanPayable: ""
+  });
   const dispatch = useDispatch();
 
   useEffect(() => {
-    debugger;
     dispatch(userActions.getById(user.id));
+    dispatch(requestLoanActions.calculateMonthlyPayment(loan));
   }, []);
+
   function handleChange(e) {
     const { name, value } = e.target;
-    setUser((user) => ({ ...user, [name]: value }));
+    setRepaymentDetails((repaymentDetails) => ({ ...repaymentDetails, [name]: value }));
     console.log("checkbox checked:", e.target.value);
   }
-  function handleDeleteUser(id) {
-    dispatch(userActions.delete(id));
-  }
+
 
   return (
     <div className="step3 loanDetails">
       <h2 className="bold">Loan Repayment Details</h2>
       <div className="row">
+        
         <div className="col-md-4">
           <img
             className="leftpannelImg"
@@ -38,41 +47,41 @@ export default function RepaymentDetails() {
         <div className="col-md-6 marginLeft">
           <div className="form-group">
             <p className="textAlignLeft bold">Loan Repayment Frequency</p>
-            <div className="textAlignLeft" onChange={handleChange}>
-              <span className="paymentType">
-                <input type="radio" value="Daily" name="paymentMethod" /> Daily
-              </span>
-              <span className="paymentType">
-                <input type="radio" value="Monthly" name="paymentMethod" />{" "}
-                Monthly
-              </span>
-              <span className="paymentType">
-                <input type="radio" value="Quarterly" name="paymentMethod" />{" "}
-                Quarterly
-              </span>
-              <span className="paymentType">
-                <input type="radio" value="Annualy" name="paymentMethod" />{" "}
-                Annualy
-              </span>
-            </div>
+            <input
+              type="text"
+              name="repaymentFrequency"
+              value={!!repaymentResponse ? repaymentResponse.repaymentFrequency : ""}
+              readOnly
+              className={"form-control inputWidth"}
+            />
+          </div>
+          <div className="form-group">
+            <p className="textAlignLeft bold">Loan Principal Amount</p>
+            <input
+              type="text"
+              name="repaymentAmount"
+              value={!!repaymentResponse ? repaymentResponse.principalAmount : ""}
+              readOnly
+              className={"form-control inputWidth"}
+            />
           </div>
           <div className="form-group">
             <p className="textAlignLeft bold">Loan Repayment Amount</p>
             <input
               type="text"
-              name="paymentMethod1"
-              value={user.paymentMethod1}
-              onChange={handleChange}
+              name="repaymentAmount"
+              value={!!repaymentResponse ? repaymentResponse.repaymentAmount : ""}
+              readOnly
               className={"form-control inputWidth"}
             />
           </div>
           <div className="form-group">
-            <p className="textAlignLeft bold">Loan Service Charge Estimate</p>
+            <p className="textAlignLeft bold">Total Interest For Loan</p>
             <input
               type="text"
-              name="paymentMethod2"
-              value={user.paymentMethod1}
-              onChange={handleChange}
+              name="totalInterest"
+              value={!!repaymentResponse ? repaymentResponse.totalInterest : ""}
+              readOnly
               className={"form-control inputWidth"}
             />
           </div>
@@ -80,14 +89,14 @@ export default function RepaymentDetails() {
             <p className="textAlignLeft bold">Loan Total Repayable</p>
             <input
               type="text"
-              name="paymentMethod3"
-              value={user.paymentMethod1}
-              onChange={handleChange}
+              name="totalLoanPayable"
+              value={!!repaymentResponse ? repaymentResponse.totalLoanPayable : ""}
+              readOnly
               className={"form-control inputWidth"}
             />
           </div>
         </div>
       </div>
-    </div>
+      </div>
   );
 }
