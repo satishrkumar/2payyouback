@@ -28,7 +28,7 @@ function calculateQuarterlyPayment(loan) {
     const requestOptions = {
         method: 'POST',
         headers: getHeaders(),
-        body: JSON.stringify(loan)
+        body: loan
     };
 
     return fetch(`${config.apiUrl}/repayment/calculateQuarterlyPayment`, requestOptions).then(handleResponse);
@@ -39,7 +39,7 @@ function calculateDailyPayment(loan) {
     const requestOptions = {
         method: 'POST',
         headers: getHeaders(),
-        body: JSON.stringify(loan)
+        body: loan
     };
 
     return fetch(`${config.apiUrl}/repayment/calculateDailyPayment`, requestOptions).then(handleResponse);
@@ -49,7 +49,7 @@ function calculateYearlyPayment(loan) {
     const requestOptions = {
         method: 'POST',
         headers: getHeaders(),
-        body: JSON.stringify(loan)
+        body: loan
     };
 
     return fetch(`${config.apiUrl}/repayment/calculateYearlyPayment`, requestOptions).then(handleResponse);;

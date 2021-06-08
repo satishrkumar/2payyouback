@@ -59,11 +59,11 @@ function calculateQuarterlyPayment(loan) {
 
 function calculateDailyPayment(loan) {
     return dispatch => {
-        dispatch(request(user));
+        dispatch(request(loan));
 
         loanRequestService.calculateDailyPayment(loan)
             .then(
-                user => {
+                loan => {
                     dispatch(success(loan));
                     history.push(loan);
                 },
