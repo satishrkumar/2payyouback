@@ -4,45 +4,40 @@ import { requestLoanActions } from "../_actions";
 import { userActions } from "../_actions";
 import "../css/homepage.css";
 import loanRepaymentDetailImg from "../images/loan_repayment_details.png";
-import Async from 'react-async';
 
 import { render } from "react-dom";
 
 export default function RepaymentDetails() {
   const repaymentResponse = useSelector((state) => state.loanrequest.items);
   const user = useSelector((state) => state.authentication.user);
-  const loan = localStorage.getItem('baseLoan');
+  const loan = localStorage.getItem("baseLoan");
   const [repaymentDetails, setRepaymentDetails] = useState({
-    repaymentFrequency:"",
+    repaymentFrequency: "",
     repaymentAmount: "",
     totalInterest: "",
-    totalLoanPayable: ""
+    totalLoanPayable: "",
   });
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(userActions.getById(user.id));
-    debugger; 
+    debugger;
     var baseLoan = JSON.parse(loan);
-    if(baseLoan.repayFrequency==="Monthly"){
-    dispatch(requestLoanActions.calculateMonthlyPayment(loan));
-  } else if (baseLoan.repayFrequency==="Daily"){
-    dispatch(requestLoanActions.calculateDailyPayment(loan));
-  } else if (baseLoan.repayFrequency==="Quarterly"){
-    dispatch(requestLoanActions.calculateQuarterlyPayment(loan));
-  } else if (baseLoan.repayFrequency==="Annualy"){
-    dispatch(requestLoanActions.calculateYearlyPayment(loan));
-  }
+    if (baseLoan.repayFrequency === "Monthly") {
+      dispatch(requestLoanActions.calculateMonthlyPayment(loan));
+    } else if (baseLoan.repayFrequency === "Daily") {
+      dispatch(requestLoanActions.calculateDailyPayment(loan));
+    } else if (baseLoan.repayFrequency === "Quarterly") {
+      dispatch(requestLoanActions.calculateQuarterlyPayment(loan));
+    } else if (baseLoan.repayFrequency === "Annualy") {
+      dispatch(requestLoanActions.calculateYearlyPayment(loan));
+    }
   }, []);
-
-
-
 
   return (
     <div className="step3 loanDetails">
       <h2 className="bold">Loan Repayment Details</h2>
       <div className="row">
-        
         <div className="col-md-4">
           <img
             className="leftpannelImg"
@@ -56,7 +51,9 @@ export default function RepaymentDetails() {
             <input
               type="text"
               name="repaymentFrequency"
-              value={!!repaymentResponse ? repaymentResponse.repaymentFrequency : ""}
+              value={
+                !!repaymentResponse ? repaymentResponse.repaymentFrequency : ""
+              }
               readOnly
               className={"form-control inputWidth"}
             />
@@ -66,7 +63,9 @@ export default function RepaymentDetails() {
             <input
               type="text"
               name="repaymentAmount"
-              value={!!repaymentResponse ? repaymentResponse.principalAmount : ""}
+              value={
+                !!repaymentResponse ? repaymentResponse.principalAmount : ""
+              }
               readOnly
               className={"form-control inputWidth"}
             />
@@ -76,7 +75,9 @@ export default function RepaymentDetails() {
             <input
               type="text"
               name="repaymentAmount"
-              value={!!repaymentResponse ? repaymentResponse.repaymentAmount : ""}
+              value={
+                !!repaymentResponse ? repaymentResponse.repaymentAmount : ""
+              }
               readOnly
               className={"form-control inputWidth"}
             />
@@ -96,13 +97,15 @@ export default function RepaymentDetails() {
             <input
               type="text"
               name="totalLoanPayable"
-              value={!!repaymentResponse ? repaymentResponse.totalLoanPayable : ""}
+              value={
+                !!repaymentResponse ? repaymentResponse.totalLoanPayable : ""
+              }
               readOnly
               className={"form-control inputWidth"}
             />
           </div>
         </div>
       </div>
-      </div>
+    </div>
   );
 }
