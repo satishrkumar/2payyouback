@@ -8,7 +8,11 @@ import loanDetailImg from "../images/loan_details.png";
 export default function LoanDetauseEffectils() {
   const users = useSelector((state) => state.users);
   const user = useSelector((state) => state.authentication.user);
+  const loandata = localStorage.getItem('baseLoan');
+
   const dispatch = useDispatch();
+  
+  const repaymentResponse = useSelector((state) => state.loanrequest.items);
   const currency = ["£", "$", "Others..."];
   const [baseLoan, setLoan] = useState({
     currency: "",
@@ -32,6 +36,22 @@ export default function LoanDetauseEffectils() {
     console.log("requestloan checkbox name:", e.target.name);
     console.log("requestloan checkbox value:", e.target.value);
     localStorage.setItem('baseLoan', JSON.stringify(baseLoan));
+  }
+
+  function calculateRepayment(e) {
+    
+    var loan = JSON.stringify(baseLoan);
+   if(baseLoan.repayFrequency==="Monthly"){
+     dispatch(requestLoanActions.calculateMonthlyPayment(loan));
+  } else if (baseLoan.repayFrequency==="Daily"){
+     dispatch(requestLoanActions.calculateDailyPayment(loan));
+  } else if (baseLoan.repayFrequency==="Quarterly"){
+     dispatch(requestLoanActions.calculateQuarterlyPayment(loan));
+  } else if (baseLoan.repayFrequency==="Annualy"){
+     dispatch(requestLoanActions.calculateYearlyPayment(loan
+      ));
+  }
+  debugger;
   }
   
   return (
@@ -73,18 +93,22 @@ export default function LoanDetauseEffectils() {
             <p className="textAlignLeft bold">Loan Repayment Frequency</p>
             <div className="textAlignLeft" >
               <span className="paymentType">
-                <input type="radio" id="Daily" name="repayFrequency" value="Daily" onSelect={handleChange} onClick={handleChange} /> Daily
+                <input type="radio" id="Daily" name="repayFrequency" value="Daily" onSelect={handleChange} 
+                onClick={handleChange} onBlur={calculateRepayment}/> Daily
               </span>
               <span className="paymentType">
-                <input type="radio" id="Monthly" name="repayFrequency" value="Monthly" onSelect={handleChange} onClick={handleChange}/>{" "}
+                <input type="radio" id="Monthly" name="repayFrequency" value="Monthly" onSelect={handleChange} 
+                onClick={handleChange} onBlur={calculateRepayment}/>{" "}
                 Monthly
               </span>
               <span className="paymentType">
-                <input type="radio" id="Quarterly"  name="repayFrequency" value="Quarterly" onSelect={handleChange} onClick={handleChange}/>{" "}
+                <input type="radio" id="Quarterly"  name="repayFrequency" value="Quarterly" 
+                onSelect={handleChange} onClick={handleChange} onBlur={calculateRepayment}/>{" "}
                 Quarterly
               </span>
               <span className="paymentType">
-                <input type="radio" id="Annualy" name="repayFrequency" value="Annualy" onSelect={handleChange} onClick={handleChange}/>{" "}
+                <input type="radio" id="Annualy" name="repayFrequency" value="Annualy" onSelect={handleChange} 
+                onClick={handleChange} onBlur={calculateRepayment}/>{" "}
                 Annualy
               </span>
             </div>
@@ -139,6 +163,16 @@ export default function LoanDetauseEffectils() {
               onBlur={handleChange}
               className={"form-control ldDate"}
             />
+             <div className="form-group">
+            <p className="textAlignLeft bold">Loan Repayment Amount</p>
+            <input
+              type="text"
+              name="repaymentAmount"
+              onFocus={calculateRepayment}
+              value={!!repaymentResponse ? repaymentResponse.repaymentAmount : ""}
+              className={"form-control inputWidth"}
+            />
+          </div>
           </div>
         </div>
       </div>
