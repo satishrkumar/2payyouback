@@ -35,11 +35,34 @@ export default function LoanDetauseEffectils() {
    // debugger;
     console.log("requestloan checkbox name:", e.target.name);
     console.log("requestloan checkbox value:", e.target.value);
-    localStorage.setItem('baseLoan', JSON.stringify(baseLoan));
+    localStorage.setItem('baseLoan', JSON.stringify(baseLoan));   
+    calculateRepayment(e);
+  }
+
+
+  function validateParams(e){
+    if(baseLoan.loanAmt === null || baseLoan.loanAmt ===""){
+      return false;
+    }else if(baseLoan.repayFrequency === null || baseLoan.repayFrequency ===""){
+      return false;
+    }else if(baseLoan.borrowingReason === null || baseLoan.borrowingReason ===""){
+      return false;
+    }else if(baseLoan.repaymentDate === null || baseLoan.repaymentDate ===""){
+      return false;
+    }else if(baseLoan.loanTerm === null || baseLoan.loanTerm ===""){
+      return false;
+    }else if(baseLoan.rateOfInterest === null || baseLoan.rateOfInterest ===""){
+      return false;
+    }
+
+
+      debugger;
+    return true;
   }
 
   function calculateRepayment(e) {
-    
+    debugger;
+   if( validateParams(e)){
     var loan = JSON.stringify(baseLoan);
    if(baseLoan.repayFrequency==="Monthly"){
      dispatch(requestLoanActions.calculateMonthlyPayment(loan));
@@ -51,7 +74,8 @@ export default function LoanDetauseEffectils() {
      dispatch(requestLoanActions.calculateYearlyPayment(loan
       ));
   }
-  debugger;
+}
+  //debugger;
   }
   
   return (
@@ -71,7 +95,7 @@ export default function LoanDetauseEffectils() {
               className={"form-control"}
               value={baseLoan.currency}
               onChange={handleChange}
-              onBlur={handleChange}
+              onBlur={calculateRepayment}
             >
               {currency.map((name) => (
                 <option key={name} value={name}>
@@ -86,6 +110,7 @@ export default function LoanDetauseEffectils() {
               name="loanAmt"
               value={baseLoan.loanAmt}
               onChange={handleChange}
+              onBlur={calculateRepayment}
               className={"form-control"}
             />
           </div>
@@ -120,6 +145,7 @@ export default function LoanDetauseEffectils() {
             <textarea
               value={baseLoan.borrowingReason}
               onChange={handleChange}
+              onBlur={calculateRepayment}
               className={"form-control registerPageInput"}
               name="borrowingReason"
               rows="3"
@@ -135,6 +161,7 @@ export default function LoanDetauseEffectils() {
               name="repaymentDate"
               value={baseLoan.repaymentDate}
               onChange={handleChange}
+              onBlur={calculateRepayment}
               className={"form-control ldDate"}
             />
           </div>
@@ -147,6 +174,7 @@ export default function LoanDetauseEffectils() {
               name="loanTerm"
               value={baseLoan.loanTerm}
               onChange={handleChange} 
+              onBlur={calculateRepayment}
               className={"form-control ldDate"}
             />
           </div>
@@ -160,6 +188,7 @@ export default function LoanDetauseEffectils() {
               name="rateOfInterest"
               value={baseLoan.rateOfInterest}
               onChange={handleChange} 
+              onBlur={calculateRepayment}
               onBlur={handleChange}
               className={"form-control ldDate"}
             />
