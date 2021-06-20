@@ -6,9 +6,7 @@ import "../css/homepage.css";
 import loanDetailImg from "../images/loan_details.png";
 
 export default function LoanDetauseEffectils() {
-  const users = useSelector((state) => state.users);
   const user = useSelector((state) => state.authentication.user);
-  const loandata = localStorage.getItem('baseLoan');
 
   const dispatch = useDispatch();
   
@@ -23,24 +21,24 @@ export default function LoanDetauseEffectils() {
     repayFrequency:"",
     loanTerm:""
   });
+
   useEffect(() => {
-    debugger;
-   // dispatch(requestLoanActions.calculateMonthlyPayment(loan));
-    dispatch(userActions.getById(user.id));
-    
+    //debugger;
+    dispatch(userActions.getById(user.id));    
   }, []);
+
   function handleChange(e) {
     const { name, value } = e.target;
     setLoan((baseLoan) => ({ ...baseLoan, [name]: value }));
-   // debugger;
+    //debugger;
     console.log("requestloan checkbox name:", e.target.name);
     console.log("requestloan checkbox value:", e.target.value);
     localStorage.setItem('baseLoan', JSON.stringify(baseLoan));   
     calculateRepayment(e);
   }
 
-
   function validateParams(e){
+    debugger;
     if(baseLoan.loanAmt === null || baseLoan.loanAmt ===""){
       return false;
     }else if(baseLoan.repayFrequency === null || baseLoan.repayFrequency ===""){
@@ -49,19 +47,56 @@ export default function LoanDetauseEffectils() {
       return false;
     }else if(baseLoan.repaymentDate === null || baseLoan.repaymentDate ===""){
       return false;
-    }else if(baseLoan.loanTerm === null || baseLoan.loanTerm ===""){
+    }else if(baseLoan.loanTerm === null || baseLoan.loanTerm ==="" || baseLoan.loanTerm==="0"){
       return false;
     }else if(baseLoan.rateOfInterest === null || baseLoan.rateOfInterest ===""){
       return false;
     }
-
-
-      debugger;
     return true;
   }
 
-  function calculateRepayment(e) {
+  function termDiff(e){
     debugger;
+    var repayDate = document.getElementById("repaymentDate").value;
+    if(repayDate !== null && repayDate !==""){      
+    var todaysDate = new Date();
+    var futureDate = new Date(repayDate);
+    var mDiff = monthDiff(todaysDate,futureDate);
+    
+   if(document.getElementById("repayFrequency2").checked){
+      document.getElementById("loanTerm").value = mDiff;
+    } else if (document.getElementById("repayFrequency1").checked){
+      var dayDiff = Math.round((futureDate.getTime() - todaysDate.getTime())/(1000*3600*24));
+      document.getElementById("loanTerm").value = dayDiff;
+   } else if (document.getElementById("repayFrequency3").checked){
+     var qDiff = (mDiff/3) < 1 ? 0 : Math.round(mDiff/3);
+     document.getElementById("loanTerm").value = qDiff;
+   } else if (document.getElementById("repayFrequency4").checked){
+     var yDiff = (mDiff/12) < 1 ? 0 : Math.round(mDiff/12);
+     document.getElementById("loanTerm").value = yDiff;
+   }
+   baseLoan.loanTerm = document.getElementById("loanTerm").value;
+   if(baseLoan.loanTerm==="0") {
+       document.getElementById("repaymentAmount").value ="";
+        alert("pls select the correct repayment date");
+   }
+  }
+  }
+
+  function monthDiff(d1,d2){
+    var months;
+    var endYear = d2.getFullYear();
+    var startYear = d1.getFullYear();
+    console.log("endYear:", endYear);
+    console.log("startYear:", startYear);
+    months = (endYear - startYear) * 12;
+    months -= d1.getMonth();
+    months += d2.getMonth();
+    return months <= 0 ? 0 : months;
+}
+
+  function calculateRepayment(e) {
+   // debugger;
    if( validateParams(e)){
     var loan = JSON.stringify(baseLoan);
    if(baseLoan.repayFrequency==="Monthly"){
@@ -75,7 +110,6 @@ export default function LoanDetauseEffectils() {
       ));
   }
 }
-  //debugger;
   }
   
   return (
@@ -118,22 +152,27 @@ export default function LoanDetauseEffectils() {
             <p className="textAlignLeft bold">Loan Repayment Frequency</p>
             <div className="textAlignLeft" >
               <span className="paymentType">
-                <input type="radio" id="Daily" name="repayFrequency" value="Daily" onSelect={handleChange} 
-                onClick={handleChange} onBlur={calculateRepayment}/> Daily
+                <input type="radio" id="Daily" name="repayFrequency" id="repayFrequency1" value="Daily" 
+                 onSelect={handleChange}
+                onClick={handleChange} 
+                onBlur={e => {termDiff(e);calculateRepayment(e)}}/> Daily
               </span>
               <span className="paymentType">
-                <input type="radio" id="Monthly" name="repayFrequency" value="Monthly" onSelect={handleChange} 
-                onClick={handleChange} onBlur={calculateRepayment}/>{" "}
+                <input type="radio" id="Monthly" name="repayFrequency" id="repayFrequency2" value="Monthly" 
+                 onSelect={handleChange}
+                 onClick={handleChange} onBlur={e => {termDiff(e);calculateRepayment(e)}}/>{" "}
                 Monthly
               </span>
               <span className="paymentType">
-                <input type="radio" id="Quarterly"  name="repayFrequency" value="Quarterly" 
-                onSelect={handleChange} onClick={handleChange} onBlur={calculateRepayment}/>{" "}
+                <input type="radio" id="Quarterly"  name="repayFrequency" id="repayFrequency3" value="Quarterly" 
+                 onSelect={handleChange}
+                onClick={handleChange} onBlur={e => {termDiff(e);calculateRepayment(e)}}/>{" "}
                 Quarterly
               </span>
               <span className="paymentType">
-                <input type="radio" id="Annualy" name="repayFrequency" value="Annualy" onSelect={handleChange} 
-                onClick={handleChange} onBlur={calculateRepayment}/>{" "}
+                <input type="radio" id="Annualy" name="repayFrequency" id="repayFrequency4" value="Annualy" 
+                onSelect={handleChange}
+                onClick={handleChange} onBlur={e => {termDiff(e);calculateRepayment(e)}}/>{" "}
                 Annualy
               </span>
             </div>
@@ -159,9 +198,10 @@ export default function LoanDetauseEffectils() {
             <input
               type="date"
               name="repaymentDate"
+              id="repaymentDate"
               value={baseLoan.repaymentDate}
               onChange={handleChange}
-              onBlur={calculateRepayment}
+              onBlur={e=>{termDiff(e);calculateRepayment(e)}}
               className={"form-control ldDate"}
             />
           </div>
@@ -172,10 +212,11 @@ export default function LoanDetauseEffectils() {
             <input
               type="text"
               name="loanTerm"
-              value={baseLoan.loanTerm}
-              onChange={handleChange} 
+              id="loanTerm"
+              value={!!baseLoan ? baseLoan.loanTerm : ""}
               onBlur={calculateRepayment}
               className={"form-control ldDate"}
+              readOnly
             />
           </div>
           <div className="form-group dw">
@@ -197,6 +238,7 @@ export default function LoanDetauseEffectils() {
             <input
               type="text"
               name="repaymentAmount"
+              id="repaymentAmount"
               onFocus={calculateRepayment}
               value={!!repaymentResponse ? repaymentResponse.repaymentAmount : ""}
               className={"form-control inputWidth"}
