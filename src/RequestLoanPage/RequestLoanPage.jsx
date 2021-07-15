@@ -6,6 +6,7 @@ import LeftNav from "../common/LeftNav";
 import Header from "../common/Header";
 import LoanDetails from "./LoanDetails";
 import RepaymentDetails from "./RepaymentDetails";
+import LenderDetails from "./LenderDetails";
 import PaypalAccount from "./PaypalAccount";
 import StepProgressBar from "react-step-progress";
 import "../css/homepage.css";
@@ -26,15 +27,15 @@ function RequestLoanPage() {
     maxWidth: "98%",
     borderRadius: "50px",
     padding: "0",
-    marginBottom:"20px"
-
+    marginBottom: "20px",
   };
   useEffect(() => {
     debugger;
     dispatch(userActions.getById(user.id));
   }, []);
   const step1Content = <LoanDetails />;
-  const step3Content = <RepaymentDetails />;
+  const step2Content = <RepaymentDetails />;
+  const step3Content = <LenderDetails />;
   const step4Content = <PaypalAccount />;
 
   const [show, setShow] = useState(false);
@@ -42,11 +43,16 @@ function RequestLoanPage() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-
   var modelContent = "";
+  function step2Validator() {
+    // alert("one");
+    modelContent = "Do you have a PayPal account?";
+    handleShow();
+    return true;
+  }
   function step3Validator() {
     // alert("one");
-     modelContent = "Do you have a PayPal account?";
+    modelContent = "Do you have a Lender Details?";
     handleShow();
     return true;
   }
@@ -55,16 +61,12 @@ function RequestLoanPage() {
     //dispatch(requestLoanActions.calculateMonthlyPayment(loan));
   };
 
-
-
-
   function One() {
     // alert("one");
-   modelContent = "abc";
+    modelContent = "abc";
     handleShow();
     return true;
   }
-
 
   return (
     <div className="container requestBG" style={containerBg}>
@@ -90,21 +92,21 @@ function RequestLoanPage() {
                     name: "Loan Details",
                     content: step1Content,
                   },
-                  // {
-                  //   label: 'Tell us more',
-                  //   name: 'Tell us more',
-                  //   content: step2Content,
-                  //   validator: step2Validator
-                  // },
                   {
                     label: "Loan Repayment Details",
                     name: "Loan Repayment Details",
+                    content: step2Content,
+                    validator: step2Validator,
+                  },
+                  {
+                    label: "Lender Details",
+                    name: "Lender Details",
                     content: step3Content,
                     validator: step3Validator,
                   },
                   {
-                    label: "PayPal Account",
-                    name: "PayPal Account",
+                    label: "Summary Details",
+                    name: "Summary Details",
                     content: step4Content,
                   },
                 ]}
@@ -114,15 +116,13 @@ function RequestLoanPage() {
         </div>
       </div>
 
-      <Modal show={show} onHide={handleClose} className="paymentModelWindow">
+      {/*  <Modal show={show} onHide={handleClose} className="paymentModelWindow">
         <Modal.Header>
           <Modal.Title>
             <img src={payPalImg} alt="image" />
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body className="textAlignCenter">
-          {modelContent}
-        </Modal.Body>
+        <Modal.Body className="textAlignCenter">{modelContent}</Modal.Body>
         <Modal.Footer className="textAlignCenter">
           <Button variant="primary" onClick={handleClose}>
             Link PayPal
@@ -131,7 +131,7 @@ function RequestLoanPage() {
             Pay Manually
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
     </div>
   );
 }

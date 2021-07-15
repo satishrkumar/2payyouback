@@ -35,7 +35,7 @@ export default function RepaymentDetails() {
   }, []);
 
   return (
-    <div className="step3 loanDetails">
+    <div className="step2 loanDetails">
       <h2 className="bold">Loan Repayment Details</h2>
       <div className="row">
         <div className="col-md-4">

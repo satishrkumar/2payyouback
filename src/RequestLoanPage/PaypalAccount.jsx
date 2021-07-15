@@ -20,7 +20,7 @@ export default function LoanDetails() {
 
   return (
     <div className="step4">
-      <h5 className="bold">PayPal Account</h5>
+      <h5 className="bold">Summary Details</h5>
       <div className="row">
         <div className="col-md-5">
           <img className="leftpannelImg" src={loanDetailImg} alt="image" />
