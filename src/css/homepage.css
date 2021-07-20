@@ -16,6 +16,9 @@
 .textAlignLeft {
   text-align: left;
 }
+.labelAlignLeft{
+  text-align:left !important;
+}
 .form-control.registerPageInput {
   width: 45%;
   float: left;
@@ -23,6 +26,16 @@
   margin-bottom: 1%;
   font-size: 14px;
   height: 30px;
+}
+
+.form-group{
+  text-align: left !important;
+}
+
+.labelText{
+  font-weight:bold;
+  text-align:left;
+  margin-bottom:1px;
 }
 textarea.form-control.registerPageInput {
   width: 55%;
@@ -64,6 +77,57 @@ textarea.form-control.registerPageInput {
 }
 .marginLeft {
   margin-left: 10%;
+}
+
+/* lender */
+
+.lender{
+border:1px solid #dadee3;
+  margin-top:0px;
+  padding:10px 20px 5px 20px;
+  
+}
+
+.lenderdetails{
+  width:100%;
+  padding:5px;
+  margin:0px;
+ 
+}
+
+.lenderavatar{
+  width:60px;
+  text-align:left;
+  float:left;
+  padding:0px;
+  margin:0px;
+  
+}
+
+.lenderemail{
+  width: calc(100% - 120px);
+  text-align:left;
+  float:left;
+  padding:0px;
+  margin:0px;
+  
+}
+
+.lenderbox{
+  width:60px;
+  text-align:right;
+  float:right;
+  padding:0px;
+  margin:0px;
+ 
+}
+
+.btn.lendersend{
+  width:120px !important;
+}
+
+.cls{
+  clear:both;
 }
 /*login page*/
 .form-control.loginInput {
@@ -197,7 +261,7 @@ h1 {
   text-align: center;
   border: 1px solid #cacbcb;
   border-radius: 20px;
-  height: 420px;
+  height: 560px;
   padding: 30px;
 }
 .step1,
