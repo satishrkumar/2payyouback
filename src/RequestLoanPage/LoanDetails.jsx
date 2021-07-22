@@ -11,7 +11,6 @@ export default function LoanDetauseEffectils() {
   const repaymentResponse = useSelector((state) => state.loanrequest.items);
   const loanFromState = useSelector((state) => state.loanrequest);
   const loanrequestFromState = !!loanFromState ? loanFromState.loan : undefined;
-  console.log("satish .. ", loanrequestFromState);
 
   const dispatch = useDispatch();
   const options = [
