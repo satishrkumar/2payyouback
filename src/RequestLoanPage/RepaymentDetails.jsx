@@ -10,26 +10,18 @@ import { render } from "react-dom";
 export default function RepaymentDetails() {
   const repaymentResponse = useSelector((state) => state.loanrequest.items);
   const user = useSelector((state) => state.authentication.user);
-  const loan = localStorage.getItem("baseLoan");
-  const [repaymentDetails, setRepaymentDetails] = useState({
-    repaymentFrequency: "",
-    repaymentAmount: "",
-    totalInterest: "",
-    totalLoanPayable: "",
-  });
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(userActions.getById(user.id));
-    debugger;
-    var baseLoan = JSON.parse(loan);
-    if (baseLoan.repayFrequency === "Monthly") {
+    if (repaymentResponse.repayFrequency === "Monthly") {
       dispatch(requestLoanActions.calculateMonthlyPayment(loan));
-    } else if (baseLoan.repayFrequency === "Daily") {
+    } else if (repaymentResponse.repayFrequency === "Daily") {
       dispatch(requestLoanActions.calculateDailyPayment(loan));
-    } else if (baseLoan.repayFrequency === "Quarterly") {
+    } else if (repaymentResponse.repayFrequency === "Quarterly") {
       dispatch(requestLoanActions.calculateQuarterlyPayment(loan));
-    } else if (baseLoan.repayFrequency === "Annualy") {
+    } else if (repaymentResponse.repayFrequency === "Annualy") {
       dispatch(requestLoanActions.calculateYearlyPayment(loan));
     }
   }, []);

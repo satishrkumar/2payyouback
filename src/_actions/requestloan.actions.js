@@ -1,7 +1,7 @@
 import { requestLoanConstants } from '../_constants';
 import { loanRequestService } from '../_services';
 import { alertActions } from '.';
-import { history } from '../_helpers';
+
 
 export const requestLoanActions = {
     calculateMonthlyPayment,
@@ -12,93 +12,96 @@ export const requestLoanActions = {
 
 function calculateMonthlyPayment(loan) {
     return dispatch => {
-        dispatch(request({ loan }));
-
-        loanRequestService.calculateMonthlyPayment(loan)
-        
-            .then(
-                loan => {
-                    dispatch(success(loan));
-                    history.push(loan);
-                },
-                error => {
-                    dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
-                }
-            );
+        dispatch(request(loan));
+        if (validateParams(loan)) {
+            loanRequestService.calculateMonthlyPayment(JSON.stringify(loan))
+                .then(
+                    loan => {
+                        dispatch(success(loan));
+                    },
+                    error => {
+                        dispatch(failure(error.toString()));
+                        dispatch(alertActions.error(error.toString()));
+                    }
+                );
+        }
     };
 
-    function request(loan) { return { type: requestLoanConstants.REQLOAN_REQUEST, loan } }
-    function success(loan) { return { type: requestLoanConstants.REQLOAN_SUCCESS, loan } }
-    function failure(error) { return { type: requestLoanConstants.REQLOAN_FAILURE, error } }
- 
 }
 
 
 function calculateQuarterlyPayment(loan) {
     return dispatch => {
         dispatch(request(loan));
-
-        loanRequestService.calculateQuarterlyPayment(loan)
-            .then(
-                loan => {
-                    dispatch(success(loan));
-                    history.push(loan);
-                },
-                error => {
-                    dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
-                }
-            );
+        if (validateParams(loan)) {
+            loanRequestService.calculateQuarterlyPayment(JSON.stringify(loan))
+                .then(
+                    loan => {
+                        dispatch(success(loan));
+                    },
+                    error => {
+                        dispatch(failure(error.toString()));
+                        dispatch(alertActions.error(error.toString()));
+                    }
+                );
+        }
     };
-
-    function request(loan) { return { type: requestLoanConstants.REQLOAN_REQUEST, loan } }
-    function success(loan) { return { type: requestLoanConstants.REQLOAN_SUCCESS, loan } }
-    function failure(error) { return { type: requestLoanConstants.REQLOAN_FAILURE, error } }
 }
 
 function calculateDailyPayment(loan) {
     return dispatch => {
         dispatch(request(loan));
-
-        loanRequestService.calculateDailyPayment(loan)
-            .then(
-                loan => {
-                    dispatch(success(loan));
-                    history.push(loan);
-                },
-                error => {
-                    dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
-                }
-            );
+        if (validateParams(loan)) {
+            loanRequestService.calculateDailyPayment(JSON.stringify(loan))
+                .then(
+                    loan => {
+                        dispatch(success(loan));
+                    },
+                    error => {
+                        dispatch(failure(error.toString()));
+                        dispatch(alertActions.error(error.toString()));
+                    }
+                );
+        }
     };
-
-    function request(loan) { return { type: requestLoanConstants.REQLOAN_REQUEST, loan } }
-    function success(loan) { return { type: requestLoanConstants.REQLOAN_SUCCESS, loan } }
-    function failure(error) { return { type: requestLoanConstants.REQLOAN_FAILURE, error } }
 }
 
 
-function calculateYearlyPayment(loan, from) {
+function calculateYearlyPayment(loan) {
     return dispatch => {
         dispatch(request(loan));
-
-        loanRequestService.calculateYearlyPayment(loan)
-            .then(
-                loan => {
-                    dispatch(success(loan));
-                    history.push(loan);
-                },
-                error => {
-                    dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
-                }
-            );
+        if (validateParams(loan)) {
+            loanRequestService.calculateYearlyPayment(JSON.stringify(loan))
+                .then(
+                    loan => {
+                        dispatch(success(loan));
+                    },
+                    error => {
+                        dispatch(failure(error.toString()));
+                        dispatch(alertActions.error(error.toString()));
+                    }
+                );
+        }
     };
 
-    function request(loan) { return { type: requestLoanConstants.REQLOAN_REQUEST, loan } }
-    function success(loan) { return { type: requestLoanConstants.REQLOAN_SUCCESS, loan } }
-    function failure(error) { return { type: requestLoanConstants.REQLOAN_FAILURE, error } }
 }
 
+function validateParams(loanrequest) {
+    if (loanrequest.loanAmt === null || loanrequest.loanAmt === "") {
+        return false;
+    } else if (loanrequest.repayFrequency === null || loanrequest.repayFrequency === "") {
+        return false;
+    } else if (loanrequest.borrowingReason === null || loanrequest.borrowingReason === "") {
+        return false;
+    } else if (loanrequest.repaymentDate === null || loanrequest.repaymentDate === "") {
+        return false;
+    } else if (loanrequest.loanTerm === null || loanrequest.loanTerm === "" || loanrequest.loanTerm === "0") {
+        return false;
+    } else if (loanrequest.rateOfInterest === null || loanrequest.rateOfInterest === "") {
+        return false;
+    }
+    return true;
+}
+function request(loan) { return { type: requestLoanConstants.REQLOAN_REQUEST, loan } }
+function success(loan) { return { type: requestLoanConstants.REQLOAN_SUCCESS, loan } }
+function failure(error) { return { type: requestLoanConstants.REQLOAN_FAILURE, error } }

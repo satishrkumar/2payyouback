@@ -17,7 +17,6 @@ export default function Summary() {
     borderCollapse: "collapse",
   };
   useEffect(() => {
-    debugger;
     dispatch(userActions.getById(user.id));
   }, []);
 

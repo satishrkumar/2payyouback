@@ -48,42 +48,49 @@ export default function RepaymentDetails() {
           />
         </div>
         <div className="col-md-6 marginLeft lenderdetails">
-        <input
-              type="text"
-              name="loanAmt"
-              placeholder="Enter Email ID/ Mobile Number"
-              className={"form-control"}
-            />
-            <div className="lender">
-                 <div className="row">
-                 <div className="lenderavatar">
-                 <img className="iconClass avatar" src={avatar} />
-                 </div>
-                 <div className="lenderemail">  <label className="labelAlignLeft">raja pidugu<br/>raja@gmail.com</label>
-                 </div>
-                 <div className="lenderbox">
-                 <input type="checkbox" id=""  
-                />
-                 </div>
-               </div>
-      
-               <div className="row">
-                 <div className="lenderavatar">
-                 <img className="iconClass avatar" src={avatar2} />
-                 </div>
-                 <div className="lenderemail">  <label className="labelAlignLeft">nandini valluri<br/>nandinivalluri@gmail.com</label>
-                 </div>
-                 <div className="lenderbox">
-                 <input type="checkbox" id=""  
-                />
-                 </div>
-               </div>
-            
-               </div>
-            
+          <input
+            type="text"
+            name="loanAmt"
+            placeholder="Enter Email ID/ Mobile Number"
+            className={"form-control"}
+          />
+          <div className="lender">
+            <div className="row">
+              <div className="lenderavatar">
+                <img className="iconClass avatar" src={avatar} />
+              </div>
+              <div className="lenderemail">
+                {" "}
+                <label className="labelAlignLeft">
+                  raja pidugu
+                  <br />
+                  raja@gmail.com
+                </label>
+              </div>
+              <div className="lenderbox">
+                <input type="checkbox" id="" />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="lenderavatar">
+                <img className="iconClass avatar" src={avatar2} />
+              </div>
+              <div className="lenderemail">
+                {" "}
+                <label className="labelAlignLeft">
+                  nandini valluri
+                  <br />
+                  nandinivalluri@gmail.com
+                </label>
+              </div>
+              <div className="lenderbox">
+                <input type="checkbox" id="" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    
   );
 }

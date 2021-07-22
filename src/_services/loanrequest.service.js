@@ -13,15 +13,15 @@ function getHeaders() {
     return { 'Content-Type': 'application/json', 'authorization': 'Basic ' + window.btoa('admin' + ":" + 'admin') };
 }
 function calculateMonthlyPayment(loan) {
-    debugger;
+
     const requestOptions = {
         method: 'POST',
-        headers: getHeaders(),calculateMonthlyPayment,
+        headers: getHeaders(), calculateMonthlyPayment,
         body: loan
     };
 
     return fetch(`${config.apiUrl}/repayment/calculateMonthlyPayment`, requestOptions).then(handleResponse);
-      
+
 }
 
 function calculateQuarterlyPayment(loan) {
@@ -35,7 +35,7 @@ function calculateQuarterlyPayment(loan) {
 }
 
 function calculateDailyPayment(loan) {
-    debugger;
+
     const requestOptions = {
         method: 'POST',
         headers: getHeaders(),
@@ -57,7 +57,7 @@ function calculateYearlyPayment(loan) {
 
 
 function handleResponse(response) {
-    debugger;
+
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {

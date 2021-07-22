@@ -2,16 +2,20 @@ import { requestLoanConstants } from '../_constants';
 
 export function loanrequest(state = {}, action) {
     switch (action.type) {
-       case requestLoanConstants.REQLOAN_REQUEST:
-        return {
-            loan: action.loan
-        };
+
+        case requestLoanConstants.REQLOAN_REQUEST:
+            return {
+                ...state,
+                loan: action.loan
+            };
         case requestLoanConstants.REQLOAN_SUCCESS:
             return {
+                ...state,
                 items: action.loan
             };
         case requestLoanConstants.REQLOAN_FAILURE:
             return {
+                ...state,
                 error: action.error
             };
         case requestLoanConstants.DELETE_REQUEST:
@@ -24,7 +28,7 @@ export function loanrequest(state = {}, action) {
                         : user
                 )
             };
-       
+
         default:
             return state
     }

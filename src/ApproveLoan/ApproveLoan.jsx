@@ -27,7 +27,6 @@ function ApproveLoan() {
     marginBottom: "20px",
   };
   useEffect(() => {
-    debugger;
     dispatch(userActions.getById(user.id));
   }, []);
   const step1Content = <LoanRequestDetails />;

@@ -17,9 +17,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import payPalImg from "../images/paypal_icon.svg";
 
 function RequestLoanPage() {
-  const users = useSelector((state) => state.users);
   const user = useSelector((state) => state.authentication.user);
-  const loan = useSelector((state) => state.loanrequest.loan);
+
   const dispatch = useDispatch();
   const containerBg = {
     background: "white",
@@ -30,7 +29,6 @@ function RequestLoanPage() {
     marginBottom: "20px",
   };
   useEffect(() => {
-    debugger;
     dispatch(userActions.getById(user.id));
   }, []);
   const step1Content = <LoanDetails />;

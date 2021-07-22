@@ -67,7 +67,7 @@ function getById(id) {
 }
 
 function register(user) {
-    debugger;
+
     const requestOptions = {
         method: 'POST',
         headers: getHeaders(),
@@ -98,7 +98,7 @@ function _delete(id) {
 }
 
 function handleResponse(response) {
-    debugger;
+
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {

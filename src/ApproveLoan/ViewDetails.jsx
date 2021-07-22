@@ -13,7 +13,6 @@ export default function ViewDetails() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    debugger;
     dispatch(userActions.getById(user.id));
   }, []);
   function handleChange(e) {

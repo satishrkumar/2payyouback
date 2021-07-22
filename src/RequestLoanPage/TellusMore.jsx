@@ -11,7 +11,6 @@ export default function TellusMore() {
   const dispatch = useDispatch();
   const currency = ["£", "$", "Others..."];
   useEffect(() => {
-    debugger;
     dispatch(userActions.getById(user.id));
   }, []);
   function handleChange(e) {

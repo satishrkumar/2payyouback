@@ -8,82 +8,100 @@ import loanDetailImg from "../images/loan_details.png";
 export default function LoanDetauseEffectils() {
   const user = useSelector((state) => state.authentication.user);
 
-  const dispatch = useDispatch();
-  
   const repaymentResponse = useSelector((state) => state.loanrequest.items);
-  const currency = ["£", "$", "Others..."];
-  const [baseLoan, setLoan] = useState({
-    currency: "",
-    loanAmt: "",
-    borrowingReason: "",
-    repaymentDate: "",
-    rateOfInterest:"",
-    repayFrequency:"",
-    loanTerm:""
-  });
+  const loanFromState = useSelector((state) => state.loanrequest);
+  const loanrequestFromState = !!loanFromState ? loanFromState.loan : undefined;
+  console.log("satish .. ", loanrequestFromState);
 
+  const dispatch = useDispatch();
+  const options = [
+    {
+      label: "Daily",
+      value: "Daily",
+    },
+    {
+      label: "Monthly",
+      value: "Monthly",
+    },
+    {
+      label: "Quarterly",
+      value: "Quarterly",
+    },
+    {
+      label: "Annualy",
+      value: "Annualy",
+    },
+  ];
+
+  const currency = ["£", "$", "Others..."];
+  var [loanrequest, setLoan] = useState({
+    currency: !!loanrequestFromState ? loanrequestFromState.currency : "",
+    loanAmt: !!loanrequestFromState ? loanrequestFromState.loanAmt : "",
+    borrowingReason: !!loanrequestFromState
+      ? loanrequestFromState.borrowingReason
+      : "",
+    repaymentDate: !!loanrequestFromState
+      ? loanrequestFromState.repaymentDate
+      : "",
+    rateOfInterest: !!loanrequestFromState
+      ? loanrequestFromState.rateOfInterest
+      : "",
+    repayFrequency: !!loanrequestFromState
+      ? loanrequestFromState.repayFrequency
+      : "Monthly",
+    loanTerm: !!loanrequestFromState ? loanrequestFromState.loanTerm : "",
+  });
   useEffect(() => {
-    //debugger;
-    dispatch(userActions.getById(user.id));    
+    //
+    dispatch(userActions.getById(user.id));
   }, []);
 
   function handleChange(e) {
     const { name, value } = e.target;
-    setLoan((baseLoan) => ({ ...baseLoan, [name]: value }));
-    //debugger;
-    console.log("requestloan checkbox name:", e.target.name);
-    console.log("requestloan checkbox value:", e.target.value);
-    localStorage.setItem('baseLoan', JSON.stringify(baseLoan));   
-    calculateRepayment(e);
+    setLoan((loanrequest) => ({ ...loanrequest, [name]: value }));
+    console.log("requestloan loanrequest", loanrequest.rateOfInterest);
   }
+  function handleBlur(e) {
+    const { name, value } = e.target;
+    setLoan((loanrequest) => ({ ...loanrequest, [name]: value }));
+    console.log("requestloan loanrequest", loanrequest.rateOfInterest);
 
-  function validateParams(e){
-    debugger;
-    if(baseLoan.loanAmt === null || baseLoan.loanAmt ===""){
-      return false;
-    }else if(baseLoan.repayFrequency === null || baseLoan.repayFrequency ===""){
-      return false;
-    }else if(baseLoan.borrowingReason === null || baseLoan.borrowingReason ===""){
-      return false;
-    }else if(baseLoan.repaymentDate === null || baseLoan.repaymentDate ===""){
-      return false;
-    }else if(baseLoan.loanTerm === null || baseLoan.loanTerm ==="" || baseLoan.loanTerm==="0"){
-      return false;
-    }else if(baseLoan.rateOfInterest === null || baseLoan.rateOfInterest ===""){
-      return false;
-    }
-    return true;
+    termDiff();
+    calculateRepayment(loanrequest);
   }
-
-  function termDiff(e){
-    debugger;
+  function termDiff() {
     var repayDate = document.getElementById("repaymentDate").value;
-    if(repayDate !== null && repayDate !==""){      
-    var todaysDate = new Date();
-    var futureDate = new Date(repayDate);
-    var mDiff = monthDiff(todaysDate,futureDate);
-    
-   if(document.getElementById("repayFrequency2").checked){
-      document.getElementById("loanTerm").value = mDiff;
-    } else if (document.getElementById("repayFrequency1").checked){
-      var dayDiff = Math.round((futureDate.getTime() - todaysDate.getTime())/(1000*3600*24));
-      document.getElementById("loanTerm").value = dayDiff;
-   } else if (document.getElementById("repayFrequency3").checked){
-     var qDiff = (mDiff/3) < 1 ? 0 : Math.round(mDiff/3);
-     document.getElementById("loanTerm").value = qDiff;
-   } else if (document.getElementById("repayFrequency4").checked){
-     var yDiff = (mDiff/12) < 1 ? 0 : Math.round(mDiff/12);
-     document.getElementById("loanTerm").value = yDiff;
-   }
-   baseLoan.loanTerm = document.getElementById("loanTerm").value;
-   if(baseLoan.loanTerm==="0") {
-       document.getElementById("repaymentAmount").value ="";
-        alert("pls select the correct repayment date");
-   }
-  }
+    if (repayDate !== null && repayDate !== "") {
+      var todaysDate = new Date();
+      var futureDate = new Date(repayDate);
+      var mDiff = monthDiff(todaysDate, futureDate);
+
+      if (document.getElementById("repayFrequency").value === "Monthly") {
+        document.getElementById("loanTerm").value = mDiff;
+      } else if (document.getElementById("repayFrequency").value === "Daily") {
+        var dayDiff = Math.round(
+          (futureDate.getTime() - todaysDate.getTime()) / (1000 * 3600 * 24)
+        );
+        document.getElementById("loanTerm").value = dayDiff;
+      } else if (
+        document.getElementById("repayFrequency").value === "Quarterly"
+      ) {
+        var qDiff = mDiff / 3 < 1 ? 0 : Math.round(mDiff / 3);
+        document.getElementById("loanTerm").value = qDiff;
+      } else if (
+        document.getElementById("repayFrequency").value === "Annualy"
+      ) {
+        var yDiff = mDiff / 12 < 1 ? 0 : Math.round(mDiff / 12);
+        document.getElementById("loanTerm").value = yDiff;
+      }
+      loanrequest.loanTerm = document.getElementById("loanTerm").value;
+      if (loanrequest.loanTerm === "0") {
+        document.getElementById("repaymentAmount").value = "";
+      }
+    }
   }
 
-  function monthDiff(d1,d2){
+  function monthDiff(d1, d2) {
     var months;
     var endYear = d2.getFullYear();
     var startYear = d1.getFullYear();
@@ -93,27 +111,25 @@ export default function LoanDetauseEffectils() {
     months -= d1.getMonth();
     months += d2.getMonth();
     return months <= 0 ? 0 : months;
-}
+  }
 
-  function calculateRepayment(e) {
-   // debugger;
-   if( validateParams(e)){
-    var loan = JSON.stringify(baseLoan);
-   if(baseLoan.repayFrequency==="Monthly"){
-     dispatch(requestLoanActions.calculateMonthlyPayment(loan));
-  } else if (baseLoan.repayFrequency==="Daily"){
-     dispatch(requestLoanActions.calculateDailyPayment(loan));
-  } else if (baseLoan.repayFrequency==="Quarterly"){
-     dispatch(requestLoanActions.calculateQuarterlyPayment(loan));
-  } else if (baseLoan.repayFrequency==="Annualy"){
-     dispatch(requestLoanActions.calculateYearlyPayment(loan
-      ));
+  function calculateRepayment(loan) {
+    //
+    //if (validateParams(e)) {
+    if (loan.repayFrequency === "Monthly") {
+      dispatch(requestLoanActions.calculateMonthlyPayment(loan));
+    } else if (loanrequest.repayFrequency === "Daily") {
+      dispatch(requestLoanActions.calculateDailyPayment(loan));
+    } else if (loanrequest.repayFrequency === "Quarterly") {
+      dispatch(requestLoanActions.calculateQuarterlyPayment(loan));
+    } else if (loanrequest.repayFrequency === "Annualy") {
+      dispatch(requestLoanActions.calculateYearlyPayment(loan));
+    }
+    //}
   }
-}
-  }
-  
+
   return (
-    <div className="step1 loanDetails" >
+    <div className="step1 loanDetails">
       <h2 className="bold">Loan Details</h2>
       <div className="row">
         <div className="col-md-5">
@@ -127,9 +143,8 @@ export default function LoanDetauseEffectils() {
             <select
               name="currency"
               className={"form-control"}
-              value={baseLoan.currency}
+              value={loanrequest.currency}
               onChange={handleChange}
-              onBlur={calculateRepayment}
             >
               {currency.map((name) => (
                 <option key={name} value={name}>
@@ -142,39 +157,28 @@ export default function LoanDetauseEffectils() {
             <input
               type="text"
               name="loanAmt"
-              value={baseLoan.loanAmt}
+              id="loanAmt"
+              value={loanrequest.loanAmt}
               onChange={handleChange}
-              onBlur={calculateRepayment}
+              onBlur={handleBlur}
               className={"form-control"}
             />
           </div>
           <div className="form-group">
             <p className="textAlignLeft bold">Loan Repayment Frequency</p>
-            <div className="textAlignLeft" >
-              <span className="paymentType">
-                <input type="radio" id="Daily" name="repayFrequency" id="repayFrequency1" value="Daily" 
-                 onSelect={handleChange}
-                onClick={handleChange} 
-                onBlur={e => {termDiff(e);calculateRepayment(e)}}/> Daily
-              </span>
-              <span className="paymentType">
-                <input type="radio" id="Monthly" name="repayFrequency" id="repayFrequency2" value="Monthly" 
-                 onSelect={handleChange}
-                 onClick={handleChange} onBlur={e => {termDiff(e);calculateRepayment(e)}}/>{" "}
-                Monthly
-              </span>
-              <span className="paymentType">
-                <input type="radio" id="Quarterly"  name="repayFrequency" id="repayFrequency3" value="Quarterly" 
-                 onSelect={handleChange}
-                onClick={handleChange} onBlur={e => {termDiff(e);calculateRepayment(e)}}/>{" "}
-                Quarterly
-              </span>
-              <span className="paymentType">
-                <input type="radio" id="Annualy" name="repayFrequency" id="repayFrequency4" value="Annualy" 
-                onSelect={handleChange}
-                onClick={handleChange} onBlur={e => {termDiff(e);calculateRepayment(e)}}/>{" "}
-                Annualy
-              </span>
+            <div className="textAlignLeft">
+              <select
+                name="repayFrequency"
+                id="repayFrequency"
+                className={"form-control ldDate"}
+                value={loanrequest.repayFrequency}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              >
+                {options.map((option) => (
+                  <option value={option.value}>{option.label}</option>
+                ))}
+              </select>
             </div>
           </div>
           <div className="form-group dw">
@@ -182,9 +186,8 @@ export default function LoanDetauseEffectils() {
               Tell the reason for borrowing money?
             </p>
             <textarea
-              value={baseLoan.borrowingReason}
+              value={loanrequest.borrowingReason}
               onChange={handleChange}
-              onBlur={calculateRepayment}
               className={"form-control registerPageInput"}
               name="borrowingReason"
               rows="3"
@@ -199,9 +202,9 @@ export default function LoanDetauseEffectils() {
               type="date"
               name="repaymentDate"
               id="repaymentDate"
-              value={baseLoan.repaymentDate}
+              value={loanrequest.repaymentDate}
               onChange={handleChange}
-              onBlur={e=>{termDiff(e);calculateRepayment(e)}}
+              onBlur={handleBlur}
               className={"form-control ldDate"}
             />
           </div>
@@ -213,37 +216,37 @@ export default function LoanDetauseEffectils() {
               type="text"
               name="loanTerm"
               id="loanTerm"
-              value={!!baseLoan ? baseLoan.loanTerm : ""}
-              onBlur={calculateRepayment}
+              value={loanrequest.loanTerm}
+              onChange={handleBlur}
               className={"form-control ldDate"}
               readOnly
             />
           </div>
           <div className="form-group dw">
-
             <p className="textAlignLeft bold">
               What rate of intrest you want to give?
             </p>
             <input
               type="text"
               name="rateOfInterest"
-              value={baseLoan.rateOfInterest}
-              onChange={handleChange} 
-              onBlur={calculateRepayment}
-              onBlur={handleChange}
+              id="rateOfInterest"
+              value={loanrequest.rateOfInterest}
+              onBlur={handleBlur}
+              onChange={handleChange}
               className={"form-control ldDate"}
             />
-             <div className="form-group">
-            <p className="textAlignLeft bold">Loan Repayment Amount</p>
-            <input
-              type="text"
-              name="repaymentAmount"
-              id="repaymentAmount"
-              onFocus={calculateRepayment}
-              value={!!repaymentResponse ? repaymentResponse.repaymentAmount : ""}
-              className={"form-control inputWidth"}
-            />
-          </div>
+            <div className="form-group">
+              <p className="textAlignLeft bold">Loan Repayment Amount</p>
+              <input
+                type="text"
+                name="repaymentAmount"
+                id="repaymentAmount"
+                value={
+                  !!repaymentResponse ? repaymentResponse.repaymentAmount : ""
+                }
+                className={"form-control inputWidth"}
+              />
+            </div>
           </div>
         </div>
       </div>

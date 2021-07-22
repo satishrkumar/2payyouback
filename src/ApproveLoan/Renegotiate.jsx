@@ -12,7 +12,6 @@ export default function Renegotiate() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    debugger;
     dispatch(userActions.getById(user.id));
   }, []);
   function handleChange(e) {

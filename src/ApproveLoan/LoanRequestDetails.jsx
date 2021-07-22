@@ -27,7 +27,6 @@ export default function LoanRequestDetails() {
 
   const currency = ["£", "$", "Others..."];
   useEffect(() => {
-    debugger;
     dispatch(userActions.getById(user.id));
   }, []);
   function handleChange(e) {
