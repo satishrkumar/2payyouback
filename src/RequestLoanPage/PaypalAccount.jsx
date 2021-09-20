@@ -1,21 +1,20 @@
 import React, { useEffect } from "react";
-import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../_actions";
 import "../css/homepage.css";
 import loanDetailImg from "../images/loan_details.png";
 
 export default function LoanDetails() {
-  const users = useSelector((state) => state.users);
+  const loanrequest = useSelector((state) => state.loanrequest);
   const user = useSelector((state) => state.authentication.user);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(userActions.getById(user.id));
   }, []);
 
-  function handleDeleteUser(id) {
-    dispatch(userActions.delete(id));
-  }
+  // function handleDeleteUser(id) {
+  //   dispatch(userActions.delete(id));
+  // }
 
   return (
     <div className="step4">
@@ -30,8 +29,8 @@ export default function LoanDetails() {
               <div className="form-group">
                 <p className="labelText">Lender's Email ID's</p>
                 <label className="labelAlignLeft">
-                  nandini.valluri@purviewservices.com,
-                  raja.pidugu@purviewservices.com
+                  {loanrequest.lenders &&
+                  loanrequest.lenders.map(lender => <li key={lender}>{lender}</li>)}
                 </label>
               </div>
             </div>
@@ -39,22 +38,21 @@ export default function LoanDetails() {
               <div className="form-group">
                 <p className="labelText">Loan Amount</p>
                 <label className="labelAlignLeft">
-                  <span>&euro;</span> 1000
+                  <span>&euro;</span> {loanrequest.loan.loanAmt}
                 </label>
               </div>
             </div>
             <div className="col-md-6">
               <div className="form-group">
                 <p className="labelText">Offered Interest Rate</p>
-                <label>2% /PM</label>
+                <label>{loanrequest.loan.rateOfInterest}</label>
               </div>
             </div>
             <div className="col-md-6">
               <div className="form-group">
                 <p className="labelText">Reason for Borrowing</p>
                 <label>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
+                  {loanrequest.loan.borrowingReason}
                 </label>
               </div>
             </div>
@@ -62,14 +60,14 @@ export default function LoanDetails() {
             <div className="col-md-6">
               <div className="form-group">
                 <p className="labelText">Repayment Frequency</p>
-                <label>Monthly</label>
+                <label>{loanrequest.loan.repayFrequency}</label>
               </div>
             </div>
             <div className="col-md-6">
               <div className="form-group">
                 <p className="labelText">Amount Payable per month</p>
                 <label>
-                  <span>&euro;</span> 1000
+                  <span>&euro;</span> {loanrequest.loan.repaymentAmount}
                 </label>
               </div>
             </div>

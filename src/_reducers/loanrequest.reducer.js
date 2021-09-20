@@ -3,6 +3,12 @@ import { requestLoanConstants } from '../_constants';
 export function loanrequest(state = {}, action) {
     switch (action.type) {
 
+        case requestLoanConstants.UPDATE_LENDERS: {
+            return {
+                ...state,
+                lenders: action.payload
+            }
+        }
         case requestLoanConstants.REQLOAN_REQUEST:
             return {
                 ...state,

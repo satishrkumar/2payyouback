@@ -7,8 +7,16 @@ export const requestLoanActions = {
     calculateMonthlyPayment,
     calculateQuarterlyPayment,
     calculateDailyPayment,
-    calculateYearlyPayment
+    calculateYearlyPayment,
+    addLenders
 };
+
+function addLenders(emails) {
+    return {
+        type: requestLoanConstants.UPDATE_LENDERS,
+        payload: emails
+    }
+}
 
 function calculateMonthlyPayment(loan) {
     return dispatch => {

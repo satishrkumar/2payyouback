@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { requestLoanActions } from "../_actions";
 import { userActions } from "../_actions";
 import "../css/homepage.css";
 import loanRepaymentDetailImg from "../images/loan_repayment_details.png";
 
-import { render } from "react-dom";
 
 export default function RepaymentDetails() {
   const repaymentResponse = useSelector((state) => state.loanrequest.items);
