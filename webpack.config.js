@@ -40,6 +40,7 @@ module.exports = {
         // global app config object
         config: JSON.stringify({
             apiUrl: 'https://www.ssaaservices.co.uk/request-manager'
+            //apiUrl: 'http://localhost:8083/request-manager'
         })
     }
 }

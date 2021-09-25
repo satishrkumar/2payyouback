@@ -1,11 +1,11 @@
 import config from 'config';
-import { authHeader } from '../_helpers';
 
 export const loanRequestService = {
     calculateMonthlyPayment,
     calculateQuarterlyPayment,
     calculateDailyPayment,
-    calculateYearlyPayment
+    calculateYearlyPayment,
+    requestLoan
 };
 
 
@@ -16,7 +16,7 @@ function calculateMonthlyPayment(loan) {
 
     const requestOptions = {
         method: 'POST',
-        headers: getHeaders(), calculateMonthlyPayment,
+        headers: getHeaders(),
         body: loan
     };
 
@@ -52,7 +52,19 @@ function calculateYearlyPayment(loan) {
         body: loan
     };
 
-    return fetch(`${config.apiUrl}/repayment/calculateYearlyPayment`, requestOptions).then(handleResponse);;
+    return fetch(`${config.apiUrl}/repayment/calculateYearlyPayment`, requestOptions).then(handleResponse);
+}
+
+function requestLoan(loan) {
+
+    console.log(loan)
+    const requestOptions = {
+        method: 'POST',
+        headers: getHeaders(),
+        body: loan
+    };
+
+    return fetch(`${config.apiUrl}/loan/requestLoan`, requestOptions).then(handleResponse);
 }
 
 

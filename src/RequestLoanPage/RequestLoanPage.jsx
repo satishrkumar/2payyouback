@@ -15,9 +15,11 @@ import { Modal } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import payPalImg from "../images/paypal_icon.svg";
+import {loanrequest} from "../_reducers/loanrequest.reducer";
 
 function RequestLoanPage() {
   const user = useSelector((state) => state.authentication.user);
+  const loan = useSelector((state) => state.loanrequest);
 
   const dispatch = useDispatch();
   const containerBg = {
@@ -55,8 +57,9 @@ function RequestLoanPage() {
     return true;
   }
   const onSubmit = () => {
-    alert("submit data");
-    //dispatch(requestLoanActions.calculateMonthlyPayment(loan));
+    //alert("submit data");
+    console.log(loan)
+    dispatch(requestLoanActions.submitLoanRequest(user,loan));
   };
 
   function One() {

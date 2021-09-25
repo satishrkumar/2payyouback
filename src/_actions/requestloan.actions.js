@@ -8,8 +8,30 @@ export const requestLoanActions = {
     calculateQuarterlyPayment,
     calculateDailyPayment,
     calculateYearlyPayment,
-    addLenders
+    addLenders,
+    submitLoanRequest
 };
+
+function submitLoanRequest(user,loan){
+
+            const data = {
+                loanRequest: {
+                    borrower: {
+                        emailId: user.emailId
+                    },
+                    lender: {
+                        emailId: loan.lenders[0]
+                    },
+                    loanAmt: parseInt(loan.loan.loanAmt),
+                    loanTerm: parseInt(loan.loan.loanTerm),
+                    rateOfInterest: parseFloat(loan.loan.rateOfInterest),
+                    reasonForBorrow: loan.loan.reasonForBorrow,
+                    repayFrequency: loan.loan.repayFrequency,
+                    repaymentDate: loan.loan.repaymentDate
+                }
+            }
+            loanRequestService.requestLoan(JSON.stringify(data))
+}
 
 function addLenders(emails) {
     return {
