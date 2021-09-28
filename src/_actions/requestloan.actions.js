@@ -25,7 +25,7 @@ function submitLoanRequest(user,loan){
                     loanAmt: parseInt(loan.loan.loanAmt),
                     loanTerm: parseInt(loan.loan.loanTerm),
                     rateOfInterest: parseFloat(loan.loan.rateOfInterest),
-                    reasonForBorrow: loan.loan.reasonForBorrow,
+                    reasonForBorrow: loan.loan.borrowingReason,
                     repayFrequency: loan.loan.repayFrequency,
                     repaymentDate: loan.loan.repaymentDate
                 }
