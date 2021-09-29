@@ -17,9 +17,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import payPalImg from "../images/paypal_icon.svg";
 import {loanrequest} from "../_reducers/loanrequest.reducer";
 
+import { useHistory } from 'react-router-dom';
+
 function RequestLoanPage() {
   const user = useSelector((state) => state.authentication.user);
   const loan = useSelector((state) => state.loanrequest);
+  const history = useHistory();
 
   const dispatch = useDispatch();
   const containerBg = {
@@ -59,7 +62,9 @@ function RequestLoanPage() {
   const onSubmit = () => {
     //alert("submit data");
     console.log(loan)
-    dispatch(requestLoanActions.submitLoanRequest(user,loan));
+    console.log(history)
+    dispatch(requestLoanActions.submitLoanRequest(user,loan, history)
+    )
   };
 
   function One() {
@@ -71,6 +76,7 @@ function RequestLoanPage() {
 
   return (
     <div className="container requestBG" style={containerBg}>
+
       <div className="row">
         <LeftNav />
         <div className="col-md-9 bg-image">

@@ -1,7 +1,7 @@
-import { requestLoanConstants } from '../_constants';
-import { loanRequestService } from '../_services';
-import { alertActions } from '.';
-
+import {requestLoanConstants} from '../_constants';
+import {loanRequestService} from '../_services';
+import {alertActions} from '.';
+import {toast} from "react-toastify";
 
 export const requestLoanActions = {
     calculateMonthlyPayment,
@@ -12,25 +12,34 @@ export const requestLoanActions = {
     submitLoanRequest
 };
 
-function submitLoanRequest(user,loan){
+function submitLoanRequest(user, loan, history) {
 
-            const data = {
-                loanRequest: {
-                    borrower: {
-                        emailId: user.emailId
-                    },
-                    lender: {
-                        emailId: loan.lenders[0]
-                    },
-                    loanAmt: parseInt(loan.loan.loanAmt),
-                    loanTerm: parseInt(loan.loan.loanTerm),
-                    rateOfInterest: parseFloat(loan.loan.rateOfInterest),
-                    reasonForBorrow: loan.loan.borrowingReason,
-                    repayFrequency: loan.loan.repayFrequency,
-                    repaymentDate: loan.loan.repaymentDate
-                }
-            }
-            loanRequestService.requestLoan(JSON.stringify(data))
+    const data = {
+        loanRequest: {
+            borrower: {
+                emailId: user.emailId
+            },
+            lender: {
+                emailId: loan.lenders[0]
+            },
+            loanAmt: parseInt(loan.loan.loanAmt),
+            loanTerm: parseInt(loan.loan.loanTerm),
+            rateOfInterest: parseFloat(loan.loan.rateOfInterest),
+            reasonForBorrow: loan.loan.borrowingReason,
+            repayFrequency: loan.loan.repayFrequency,
+            repaymentDate: loan.loan.repaymentDate
+        }
+    }
+    loanRequestService.requestLoan(JSON.stringify(data)).then(() => {
+        console.log("**********")
+        console.log(history)
+        history.push("/HomePage")
+        toast.success("Loan Request Submitted")
+    }).catch(err => {
+            console.log(err)
+            toast.error("Unable To Process Request, Try Again Later")
+        }
+    )
 }
 
 function addLenders(emails) {
@@ -132,6 +141,15 @@ function validateParams(loanrequest) {
     }
     return true;
 }
-function request(loan) { return { type: requestLoanConstants.REQLOAN_REQUEST, loan } }
-function success(loan) { return { type: requestLoanConstants.REQLOAN_SUCCESS, loan } }
-function failure(error) { return { type: requestLoanConstants.REQLOAN_FAILURE, error } }
+
+function request(loan) {
+    return {type: requestLoanConstants.REQLOAN_REQUEST, loan}
+}
+
+function success(loan) {
+    return {type: requestLoanConstants.REQLOAN_SUCCESS, loan}
+}
+
+function failure(error) {
+    return {type: requestLoanConstants.REQLOAN_FAILURE, error}
+}

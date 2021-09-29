@@ -16,13 +16,13 @@ export default function Summary() {
   const users = useSelector((state) => state.users);
   const user = useSelector((state) => state.authentication.user);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(userActions.getById(user.id));
-  }, []);
-
-  function handleDeleteUser(id) {
-    dispatch(userActions.delete(id));
-  }
+  // useEffect(() => {
+  //   dispatch(userActions.getById(user.id));
+  // }, []);
+  //
+  // function handleDeleteUser(id) {
+  //   dispatch(userActions.delete(id));
+  // }
 
   return (
     <div className="col-md-12 summaryComp">

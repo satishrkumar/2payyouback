@@ -375,7 +375,6 @@ function RegisterPage() {
                 {" "}
                 <input
                   type="checkbox"
-                  checked="checked"
                   name=""
                   value=""
                   onClick={handleChange}
@@ -387,7 +386,6 @@ function RegisterPage() {
               <div className="leftB">
                 <input
                   type="checkbox"
-                  checked="checked"
                   name=""
                   value=""
                   onClick={handleChange}
@@ -402,7 +400,6 @@ function RegisterPage() {
               <div className="leftB">
                 <input
                   type="checkbox"
-                  checked="checked"
                   name=""
                   value=""
                   onClick={handleChange}

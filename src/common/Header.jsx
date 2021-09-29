@@ -13,7 +13,7 @@ export default function Header() {
   //const user = useSelector((state) => state.user);
   const user = useSelector((state) => state.authentication.user);
   const dispatch = useDispatch();
-
+/*
   useEffect(() => {
     {
       !!user ? dispatch(userActions.getById(user.id)) : "";
@@ -23,6 +23,8 @@ export default function Header() {
   function handleDeleteUser(id) {
     dispatch(userActions.delete(id));
   }
+
+ */
 
   return (
     <header className="headerClass">

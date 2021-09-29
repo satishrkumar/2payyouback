@@ -26,8 +26,11 @@ function HomePage() {
 
           <Header />
 
+
           <div className="row" className="spacingMargin">
+
             <Summary />
+
           </div>
         </div>
       </div>
