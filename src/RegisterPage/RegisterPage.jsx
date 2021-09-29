@@ -15,8 +15,8 @@ function RegisterPage() {
     padding: "2%",
   };
 
-  const countries = ["Argentina", "Bolivia", "Brazil", "Chile", "Others..."];
-  const nationality = ["abcd", "Others..."];
+  const countries = require('../constants/countries.json'); //["Argentina", "Bolivia", "Brazil", "Chile", "Others..."];
+  const nationality =  require('../constants/nationalities.json'); //["abcd", "Others..."];
 
   const [user, setUser] = useState({
     firstName: "",
@@ -291,9 +291,9 @@ function RegisterPage() {
                 onChange={handleChange}
               >
                 <option value="">Country</option>
-                {countries.map((name) => (
-                  <option key={name} value={name}>
-                    {name}
+                {countries.map((country) => (
+                  <option key={country.code} value={country.code}>
+                    {country.name}
                   </option>
                 ))}
               </select>
