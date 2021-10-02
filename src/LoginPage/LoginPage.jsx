@@ -39,14 +39,8 @@ function LoginPage() {
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
-
-    setSubmitted(true);
-    if (username && password) {
-      // get return url from location state or default to home page
-      const { from } = location.state || { from: { pathname: "/" } };
-      dispatch(userActions.login(username, password, from));
-    }
+      e.preventDefault();
+      dispatch(userActions.login(username, password));
   }
 
   return (

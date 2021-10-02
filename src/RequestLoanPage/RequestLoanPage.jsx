@@ -17,12 +17,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import payPalImg from "../images/paypal_icon.svg";
 import {loanrequest} from "../_reducers/loanrequest.reducer";
 
-import { useHistory } from 'react-router-dom';
-
 function RequestLoanPage() {
   const user = useSelector((state) => state.authentication.user);
   const loan = useSelector((state) => state.loanrequest);
-  const history = useHistory();
 
   const dispatch = useDispatch();
   const containerBg = {
@@ -61,9 +58,7 @@ function RequestLoanPage() {
   }
   const onSubmit = () => {
     //alert("submit data");
-    console.log(loan)
-    console.log(history)
-    dispatch(requestLoanActions.submitLoanRequest(user,loan, history)
+    dispatch(requestLoanActions.submitLoanRequest(user,loan)
     )
   };
 

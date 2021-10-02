@@ -1,6 +1,7 @@
 import {requestLoanConstants} from '../_constants';
 import {loanRequestService} from '../_services';
 import {alertActions} from '.';
+import {history} from "../_helpers";
 import {toast} from "react-toastify";
 
 export const requestLoanActions = {
@@ -12,7 +13,7 @@ export const requestLoanActions = {
     submitLoanRequest
 };
 
-function submitLoanRequest(user, loan, history) {
+function submitLoanRequest(user, loan) {
 
     const data = {
         loanRequest: {
@@ -31,12 +32,9 @@ function submitLoanRequest(user, loan, history) {
         }
     }
     loanRequestService.requestLoan(JSON.stringify(data)).then(() => {
-        console.log("**********")
-        console.log(history)
-        history.push("/HomePage")
         toast.success("Loan Request Submitted")
-    }).catch(err => {
-            console.log(err)
+        history.push("/HomePage")
+    }).catch(() => {
             toast.error("Unable To Process Request, Try Again Later")
         }
     )

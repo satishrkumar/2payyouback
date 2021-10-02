@@ -56,14 +56,11 @@ function calculateYearlyPayment(loan) {
 }
 
 function requestLoan(loan) {
-
-    console.log(loan)
     const requestOptions = {
         method: 'POST',
         headers: getHeaders(),
         body: loan
     };
-
     return fetch(`${config.apiUrl}/loan/requestLoan`, requestOptions).then(handleResponse);
 }
 

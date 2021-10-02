@@ -45,9 +45,11 @@ function login(username, password) {
                 // to keep user logged in between page refreshes
                 user.authdata = window.btoa(username + ':' + password);
                 localStorage.setItem('user', JSON.stringify(user));
+                return user;
+            } else {
+                return null
             }
 
-            return user;
         });
 }
 

@@ -2,7 +2,7 @@ import { userConstants } from '../_constants';
 import { userService } from '../_services';
 import { alertActions } from './';
 import { history } from '../_helpers';
-
+import {toast} from "react-toastify";
 export const userActions = {
     login,
     logout,
@@ -11,7 +11,7 @@ export const userActions = {
     delete: _delete
 };
 
-function login(username, password, from) {
+function login(username, password) {
     return dispatch => {
         dispatch(request({ username }));
 
@@ -19,13 +19,17 @@ function login(username, password, from) {
             .then(
                 user => {
                     dispatch(success(user));
-                    history.push(from);
+                    history.push("/HomePage");
                 },
                 error => {
+                    toast.error("Please check the credentials")
                     dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
+                    //dispatch(alertActions.error(error.toString()));
                 }
-            );
+            ).catch(() => {
+                toast.error("Unable to login at this time")
+            }
+        )
     };
 
     function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
