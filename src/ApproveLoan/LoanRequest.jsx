@@ -2,8 +2,12 @@ import React  from "react";
 import success from "../images/approve a loan-icon.svg";
 import pending from "../images/request a loan-icon.svg";
 import reject from "../images/request a loan-icon.svg";
+import {useDispatch} from "react-redux";
+import {approveLoanActions} from "../_actions";
 
-export default function LoanRequest({borrowerEmailId, principal,apr, repaymentDate,reasonForBorrow, loanState }) {
+export default function LoanRequest({id, borrowerEmailId, principal,apr, repaymentDate,reasonForBorrow, loanState }) {
+
+  const dispatch = useDispatch();
 
   const cardBg = {
     background: "#F8FBFF",
@@ -54,12 +58,12 @@ export default function LoanRequest({borrowerEmailId, principal,apr, repaymentDa
           <hr/>
           <div className="row">
             <div className="col-md-3" style={borderStyle}>
-              <a href="#" className="btn btn-success">
+              <a href="#" className="btn btn-success" onClick={() => dispatch(approveLoanActions.approveLoanById(id))}>
                 Accept
               </a>
             </div>
             <div className="col-md-3" style={borderStyle}>
-              <a href="#" className="btn btn-danger">
+              <a href="#" className="btn btn-danger" onClick={() => dispatch(approveLoanActions.rejectLoanById(id))}>
                 Reject
               </a>
             </div>

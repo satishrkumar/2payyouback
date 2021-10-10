@@ -1,7 +1,9 @@
 import config from 'config';
 
 export const loandApprovalService = {
-    getAllLoansForApproval
+    getAllLoansForApproval,
+    approveLoanById,
+    rejectLoanById
 };
 
 
@@ -15,6 +17,24 @@ function getAllLoansForApproval(email) {
         headers: getHeaders(),
     };
     return fetch(`${config.apiUrl}/loan/findLoanByLenderEmailId/${encodeURIComponent(email)}`, requestOptions).then(handleResponse);
+}
+
+
+function approveLoanById(loanId) {
+    const requestOptions = {
+        method: 'GET',
+        headers: getHeaders(),
+    };
+    return fetch(`${config.apiUrl}/loan/approveLoan/${loanId}`, requestOptions).then(handleResponse);
+}
+
+
+function rejectLoanById(loanId) {
+    const requestOptions = {
+        method: 'GET',
+        headers: getHeaders(),
+    };
+    return fetch(`${config.apiUrl}/loan/rejectLoan/${loanId}`, requestOptions).then(handleResponse);
 }
 
 
