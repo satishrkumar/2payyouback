@@ -1,4 +1,4 @@
-import React,  from "react";
+import React from "react";
 import LeftNav from "../common/LeftNav";
 import Header from "../common/Header";
 import LoanRequestDetails from "./LoanRequestDetails";

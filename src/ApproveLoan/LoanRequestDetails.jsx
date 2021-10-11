@@ -20,7 +20,7 @@ export default function LoanRequestDetails() {
                 {
                     loansStore.loading ? <h1>Loading ...</h1> : (
                         loansStore.loans && loansStore.loans.map(loan => (
-                                <LoanRequest {...loan}/>
+                                <LoanRequest id={loan.id} {...loan}/>
                             )
                         )
                     )

@@ -30,7 +30,7 @@ export function loanApprovals(state = initialState, action) {
             const {id} = action.payload
             return {
                 ...state,
-                loans: state.loans.filter(loan => loan.id === id ? action.payload : loan)
+                loans: state.loans.map(loan => loan.id === id ? action.payload : loan)
             };
         }
         case approvalLoanConstants.REJECT_LOAN_REQUEST:
@@ -39,6 +39,7 @@ export function loanApprovals(state = initialState, action) {
             }
         case approvalLoanConstants.REJECT_LOAN_SUCCESS: {
             const {id} = action.payload
+            console.log(action.payload)
             return {
                 ...state,
                 loans: state.loans.map(loan => loan.id === id ? action.payload : loan)
